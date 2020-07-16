@@ -40,6 +40,13 @@ export default {
                     :class="nodeClasses"
                     @click="toggle"
                     ></button>
+                <div v-show="isOpen">
+                    <input
+                        class="menu-checkbox"
+                        type="checkbox"
+                        :checked="isMenuChecked"
+                    >Mostra in menù</input>
+                </div>
                 <a :href="url" v-if="!relationName"><: t('edit') :></a>
             </div>
             <div class="node-children" v-show="isOpen">
@@ -135,6 +142,20 @@ export default {
                 return '';
             }
             return JSON.stringify({ id: this.item.id, type: this.item.type });
+        },
+
+        /**
+         * Returns true if the menu property is enabled, false otherwise.
+         *
+         * @return {Boolean}
+         */
+        isMenuChecked() {
+            if (!this.item) {
+                return false;
+            }
+
+            console.log(this.item)
+            return false;
         },
 
         /**

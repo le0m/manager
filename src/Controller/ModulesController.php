@@ -177,9 +177,7 @@ class ModulesController extends AppController
 
         try {
             $query = [];
-            if ($this->objectType !== 'folders') {
-                $query['include'] = 'parents';
-            }
+            $query['include'] = 'parent';
             $response = $this->apiClient->getObject($id, $this->objectType, $query);
         } catch (BEditaClientException $e) {
             // Error! Back to index.
