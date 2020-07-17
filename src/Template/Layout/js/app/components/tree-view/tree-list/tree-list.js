@@ -44,7 +44,7 @@ export default {
                     <input
                         class="menu-checkbox"
                         type="checkbox"
-                        checked="isMenuChecked"
+                        checked="item.menu"
                     >Mostra in menù</input>
                 </div>
                 <a :href="url" v-if="!relationName"><: t('edit') :></a>
@@ -111,6 +111,7 @@ export default {
             if (!this.objectPaths || !this.item) {
                 return false;
             }
+
             return this.objectPaths.some((path) => path.split('/').slice(0, -1).pop() == this.item.id);
         },
 
@@ -142,19 +143,6 @@ export default {
                 return '';
             }
             return JSON.stringify({ id: this.item.id, type: this.item.type });
-        },
-
-        /**
-         * Returns true if the menu property is enabled, false otherwise.
-         *
-         * @return {Boolean}
-         */
-        isMenuChecked() {
-            if (!this.item) {
-                return false;
-            }
-
-            return !!this.item.menu;
         },
 
         /**
@@ -211,9 +199,7 @@ export default {
                 let response = await fetch(`${baseUrl}treeJson/?root=${this.item.id}&page=${page}`, options);
                 let json = await response.json();
 
-                let parentResponse = await fetch(`${baseUrl}relationJson/?id=${this.item.id}&relation=parent`, options);
-                let parentJson = await parentResponse.json();
-                const parentId = parentJson && parentJson.data && parentJson.data.id;
+                const parentId = this.objectPaths && this.objectPaths[0].split('/')[0];
 
                 let menuState;
                 if (parentId) {
