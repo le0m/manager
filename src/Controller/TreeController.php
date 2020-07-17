@@ -52,4 +52,35 @@ class TreeController extends AppController
         $this->set((array)$response);
         $this->set('_serialize', array_keys($response));
     }
+
+    /**
+     * Load relation data.
+     *
+     * @return void
+     */
+    public function relationJson(): void
+    {
+        $this->request->allowMethod(['get']);
+        $query = $this->Modules->prepareQuery($this->request->getQueryParams());
+        $id = Hash::get($query, 'id');
+        $relation = Hash::get($query, 'relation');
+
+        try {
+            if (empty($id) || empty($relation)) {
+                return;
+            }
+
+            $response = $this->apiClient->get(sprintf('/folders/%s/relationships/%s', $id, $relation));
+        } catch (BEditaClientException $error) {
+            $this->log($error, 'error');
+
+            $this->set(compact('error'));
+            $this->set('_serialize', ['error']);
+
+            return;
+        }
+
+        $this->set((array)$response);
+        $this->set('_serialize', array_keys($response));
+    }
 }

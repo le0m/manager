@@ -83,6 +83,13 @@ Router::scope('/', function (RouteBuilder $routes) {
         ['_name' => 'tree:treeJson']
     );
 
+    // Relation data.
+    $routes->connect(
+        '/relationJson',
+        ['controller' => 'Tree', 'action' => 'relationJson'],
+        ['_name' => 'tree:relationJson']
+    );
+
     // Model.
     Router::prefix('model', ['_namePrefix' => 'model:'], function (RouteBuilder $routes) {
 

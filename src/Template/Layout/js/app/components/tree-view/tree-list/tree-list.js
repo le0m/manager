@@ -40,11 +40,11 @@ export default {
                     :class="nodeClasses"
                     @click="toggle"
                     ></button>
-                <div v-show="isOpen">
+                <div class="menu-checkbox-container" v-show="isOpen">
                     <input
                         class="menu-checkbox"
                         type="checkbox"
-                        :checked="isMenuChecked"
+                        checked="isMenuChecked"
                     >Mostra in menù</input>
                 </div>
                 <a :href="url" v-if="!relationName"><: t('edit') :></a>
@@ -154,8 +154,7 @@ export default {
                 return false;
             }
 
-            console.log(this.item)
-            return false;
+            return !!this.item.menu;
         },
 
         /**
@@ -211,6 +210,18 @@ export default {
             do {
                 let response = await fetch(`${baseUrl}treeJson/?root=${this.item.id}&page=${page}`, options);
                 let json = await response.json();
+
+                let parentResponse = await fetch(`${baseUrl}relationJson/?id=${this.item.id}&relation=parent`, options);
+                let parentJson = await parentResponse.json();
+                const parentId = parentJson && parentJson.data && parentJson.data.id;
+
+                let menuState;
+                if (parentId) {
+                    let menuResponse = await fetch(`${baseUrl}relationJson/?id=${parentId}&relation=children`, options);
+                    let menuJson = await menuResponse.json();
+                    menuState = menuJson.data.find((elem) => elem.id === this.item.id).meta.relation.menu;
+                }
+
                 children.push(
                     ...json.data.map((child) => (
                         {
@@ -219,6 +230,7 @@ export default {
                             status: child.attributes.status,
                             title: child.attributes.title || child.attributes.uname,
                             path: child.meta.path,
+                            menu: menuState || false,
                         }
                     ))
                 );

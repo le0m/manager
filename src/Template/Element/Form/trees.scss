@@ -99,4 +99,9 @@
     .menu-checkbox {
         margin-right: $gutter;
     }
+
+    .menu-checkbox-container {
+        display: flex;
+        align-items: center;
+    }
 }
