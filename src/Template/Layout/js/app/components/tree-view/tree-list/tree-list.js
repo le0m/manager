@@ -195,17 +195,19 @@ export default {
             };
             let page = 1;
             let children = [];
+            let menuState;
+
             do {
                 let response = await fetch(`${baseUrl}treeJson/?root=${this.item.id}&page=${page}`, options);
                 let json = await response.json();
 
-                const parentId = this.objectPaths && this.objectPaths[0].split('/')[0];
+                const parentId = this.objectPaths && this.objectPaths[0].split('/')[1];
+                const elementId = this.objectPaths && this.objectPaths[0].split('/')[2];
 
-                let menuState;
                 if (parentId) {
                     let menuResponse = await fetch(`${baseUrl}relationJson/?id=${parentId}&relation=children`, options);
                     let menuJson = await menuResponse.json();
-                    menuState = menuJson.data.find((elem) => elem.id === this.item.id).meta.relation.menu;
+                    menuState = menuJson.data.find((elem) => elem.id === elementId).meta.relation.menu;
                 }
 
                 children.push(
@@ -216,7 +218,6 @@ export default {
                             status: child.attributes.status,
                             title: child.attributes.title || child.attributes.uname,
                             path: child.meta.path,
-                            menu: menuState || false,
                         }
                     ))
                 );
@@ -225,7 +226,10 @@ export default {
                 }
                 page++;
             } while (true);
+
             this.item.children = children;
+            this.item.menu = menuState;
+            console.log(this.item)
             this.isFetched = true;
             this.isLoading = false;
         },
