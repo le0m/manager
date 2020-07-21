@@ -229,7 +229,6 @@ export default {
 
             this.item.children = children;
             this.item.menu = menuState;
-            console.log(this.item)
             this.isFetched = true;
             this.isLoading = false;
         },
