@@ -193,6 +193,7 @@ export default {
                         title: folder.attributes.title || folder.attributes.uname,
                         path: folder.meta.path,
                         children: setupChildren ? [] : undefined,
+                        menu: !!(folder.meta.relation && folder.meta.relation.menu),
                     }
                 ));
         },

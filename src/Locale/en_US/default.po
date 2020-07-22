@@ -565,3 +565,6 @@ msgstr ""
 
 msgid "www.bedita.com"
 msgstr ""
+
+msgid "show in menu"
+msgstr "Show in menu"

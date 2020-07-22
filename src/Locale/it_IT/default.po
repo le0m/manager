@@ -627,3 +627,6 @@ msgstr ""
 
 #~ msgid "Warning"
 #~ msgstr "Avviso"
+
+msgid "show in menu"
+msgstr "Mostra in menù"

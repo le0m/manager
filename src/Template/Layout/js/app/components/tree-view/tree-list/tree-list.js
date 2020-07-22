@@ -40,12 +40,12 @@ export default {
                     :class="nodeClasses"
                     @click="toggle"
                     ></button>
-                <div class="menu-checkbox-container" v-show="isOpen">
+                <div class="menu-checkbox-container" v-if="isChecked">
                     <input
                         class="menu-checkbox"
                         type="checkbox"
-                        checked="item.menu"
-                    >Mostra in menù</input>
+                        v-model="item.menu"
+                    ><: t('show in menu') :></input>
                 </div>
                 <a :href="url" v-if="!relationName"><: t('edit') :></a>
             </div>
@@ -142,7 +142,15 @@ export default {
             if (!this.item) {
                 return '';
             }
-            return JSON.stringify({ id: this.item.id, type: this.item.type });
+            return JSON.stringify({
+                id: this.item.id,
+                type: this.item.type,
+                meta: {
+                    relation: {
+                        menu: this.item.menu,
+                    },
+                },
+            });
         },
 
         /**
@@ -201,15 +209,6 @@ export default {
                 let response = await fetch(`${baseUrl}treeJson/?root=${this.item.id}&page=${page}`, options);
                 let json = await response.json();
 
-                const parentId = this.objectPaths && this.objectPaths[0].split('/')[1];
-                const elementId = this.objectPaths && this.objectPaths[0].split('/')[2];
-
-                if (parentId) {
-                    let menuResponse = await fetch(`${baseUrl}relationJson/?id=${parentId}&relation=children`, options);
-                    let menuJson = await menuResponse.json();
-                    menuState = menuJson.data.find((elem) => elem.id === elementId).meta.relation.menu;
-                }
-
                 children.push(
                     ...json.data.map((child) => (
                         {
@@ -218,6 +217,7 @@ export default {
                             status: child.attributes.status,
                             title: child.attributes.title || child.attributes.uname,
                             path: child.meta.path,
+                            menu: child.meta.relation.menu,
                         }
                     ))
                 );
@@ -228,7 +228,6 @@ export default {
             } while (true);
 
             this.item.children = children;
-            this.item.menu = menuState;
             this.isFetched = true;
             this.isLoading = false;
         },

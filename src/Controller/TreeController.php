@@ -25,21 +25,15 @@ class TreeController extends AppController
      *
      * @return void
      */
-    public function treeJson(): void
+    public function treeJson($path): void
     {
         $this->request->allowMethod(['get']);
-        $query = $this->Modules->prepareQuery($this->request->getQueryParams());
-        $root = Hash::get($query, 'root');
-        $full = Hash::get($query, 'full');
-        unset($query['full']);
-        unset($query['root']);
         try {
-            if (empty($full)) {
-                $key = (empty($root)) ? 'roots' : 'parent';
-                $val = (empty($root)) ? '' : $root;
-                $query['filter'][$key] = $val;
+            if ($path) {
+                $response = $this->apiClient->getObjects(sprintf('trees/%s', $path));
+            } else {
+                $response = $this->apiClient->getObjects('trees');
             }
-            $response = $this->apiClient->getObjects('folders', $query);
         } catch (BEditaClientException $error) {
             $this->log($error, 'error');
 
