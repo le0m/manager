@@ -16,6 +16,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // vue dependencies
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 // config
 const appEntry = `${path.resolve(__dirname, BUNDLE.jsRoot)}/${BUNDLE.appPath}/${BUNDLE.appName}`;
 
@@ -41,7 +42,7 @@ let webpackPlugins = [
         exclude: ['be-icons-codes.css', 'be-icons-font.css', 'libs'],
     }),
     new webpack.DefinePlugin({
-        'process.env.NODE_ENV': `'${ENVIRONMENT.mode}'`
+        'process.env.NODE_ENV': `${JSON.stringify(ENVIRONMENT.mode)}`
     }),
 
     new MiniCssExtractPlugin({
@@ -228,6 +229,7 @@ module.exports = {
                 test: /\.(scss|css)$/,
                 include: [
                     path.resolve(__dirname, BUNDLE.templateRoot),
+                    path.resolve(__dirname, BUNDLE.styleRoot),
                 ],
 
                 use: [

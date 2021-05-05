@@ -88,7 +88,7 @@ if (index) {
 
 // Environment Config Object
 const ENVIRONMENT = {
-    mode: devMode ? 'develop' : 'production',
+    mode: devMode ? 'development' : 'production',
     proxy: proxy,
     host: server_host,
     port: server_port,
@@ -98,6 +98,7 @@ const ENVIRONMENT = {
 const BUNDLE = {
     // source
     jsRoot: 'resources/js',               // source .js
+    styleRoot: 'resources/styles',
     appPath: 'app',
     appName: 'app.js',
     templateRoot: 'templates',                   // source .scss/ .twig
@@ -129,15 +130,12 @@ const entries = readDirs(BUNDLE.jsRoot);
 let SRC_TEMPLATE_ALIAS = {
     Locale: path.resolve(__dirname, BUNDLE.localeDir),
     Template: path.resolve(__dirname, BUNDLE.templateRoot),
+    Style: path.resolve(__dirname, BUNDLE.styleRoot),
 };
 
 for (const dir of entries) {
     SRC_TEMPLATE_ALIAS[dir] = path.resolve(__dirname, `${BUNDLE.jsRoot}/${dir}`);
 }
-
-// auto aliases for vendors dependencies TO-DO
-const packageJson = require("./package.json");
-const dependencies = packageJson.dependencies;
 
 if (devMode) {
     SRC_TEMPLATE_ALIAS['vue'] = 'vue/dist/vue';
