@@ -52,7 +52,7 @@ abstract class ModelBaseController extends AppController
      * Restrict `model` module access to `admin` for now
      * {@inheritDoc}
      */
-    public function beforeFilter(Event $event): ?Response
+    public function beforeFilter(\Cake\Event\EventInterface $event): ?Response
     {
         $roles = $this->Auth->user('roles');
         if (empty($roles) || !in_array('admin', $roles)) {
@@ -123,7 +123,7 @@ abstract class ModelBaseController extends AppController
     /**
      * {@inheritDoc}
      */
-    public function beforeRender(Event $event): ?Response
+    public function beforeRender(\Cake\Event\EventInterface $event): ?Response
     {
         $this->set('resourceType', $this->resourceType);
         $this->set('moduleLink', ['_name' => 'model:list:object_types']);

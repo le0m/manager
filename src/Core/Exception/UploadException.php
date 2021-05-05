@@ -18,7 +18,7 @@ use Cake\Core\Exception\Exception;
 /**
  * Exception raised when uploading from form fails
  */
-class UploadException extends Exception
+class UploadException extends \Cake\Core\Exception\CakeException
 {
     /**
      * Array to map upload error codes with proper message string

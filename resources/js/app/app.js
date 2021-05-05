@@ -3,7 +3,7 @@ import Vue from 'vue';
 import 'libs/filters';
 import 'config/config';
 
-import 'Template/Layout/style.scss';
+import '../../styles/style.scss';
 
 import { BELoader } from 'libs/bedita';
 

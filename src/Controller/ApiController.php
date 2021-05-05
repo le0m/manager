@@ -32,7 +32,7 @@ class ApiController extends AppController
      *
      * @codeCoverageIgnore
      */
-    public function beforeFilter(Event $event): ?Response
+    public function beforeFilter(\Cake\Event\EventInterface $event): ?Response
     {
         parent::beforeFilter($event);
 

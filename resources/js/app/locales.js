@@ -5,8 +5,8 @@ import { addLocale, useLocale } from 'ttag';
  */
 export default function setupLocale(locale) {
     if (locale) {
-        // Locale is the webpack alias that points to src/Locale
-        const translationObj = require(`Locale/${locale}/default.po`);
+        // Locale is the webpack alias that points to resources/locales
+        const translationObj = require(`${locale}/default.po`);
         addLocale(locale, translationObj);
         useLocale(locale);
     }

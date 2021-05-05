@@ -71,7 +71,7 @@ class AppController extends Controller
     /**
      * {@inheritDoc}
      */
-    public function beforeFilter(Event $event): ?Response
+    public function beforeFilter(\Cake\Event\EventInterface $event): ?Response
     {
         $tokens = $this->Auth->user('tokens');
         if (!empty($tokens)) {
@@ -131,7 +131,7 @@ class AppController extends Controller
      *
      * Update session tokens if updated/refreshed by client
      */
-    public function beforeRender(Event $event): ?Response
+    public function beforeRender(\Cake\Event\EventInterface $event): ?Response
     {
         if ($this->Auth && $this->Auth->user()) {
             $user = $this->Auth->user();

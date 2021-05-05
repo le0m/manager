@@ -82,7 +82,7 @@ class PropertiesComponent extends Component
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         Configure::load('properties');
         $propConfig = array_merge(Configure::read('DefaultProperties'), (array)Configure::read('Properties'));

@@ -44,7 +44,7 @@ class Application extends BaseApplication
     /**
      * {@inheritDoc}
      */
-    public function bootstrap()
+    public function bootstrap(): void
     {
         parent::bootstrap();
         $this->addPlugin('BEdita/WebTools', ['bootstrap' => true]);
@@ -53,7 +53,7 @@ class Application extends BaseApplication
     /**
      * @return void
      */
-    protected function bootstrapCli()
+    protected function bootstrapCli(): void
     {
         parent::bootstrapCli();
         $this->addPlugin('BEdita/I18n');
@@ -122,7 +122,7 @@ class Application extends BaseApplication
         // Csrf Middleware
         $csrf = new CsrfProtectionMiddleware();
         // Token check will be skipped when callback returns `true`.
-        $csrf->whitelistCallback(function ($request) {
+        $csrf->skipCheckCallback(function ($request) {
             $actions = (array)Configure::read(sprintf('CsrfExceptions.%s', $request->getParam('controller')));
             // Skip token check for API URLs.
             if (in_array($request->getParam('action'), $actions)) {

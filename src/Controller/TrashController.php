@@ -44,7 +44,7 @@ class TrashController extends AppController
      *
      * @codeCoverageIgnore
      */
-    public function beforeRender(Event $event): ?Response
+    public function beforeRender(\Cake\Event\EventInterface $event): ?Response
     {
         $this->set('moduleLink', ['_name' => 'trash:list']);
 

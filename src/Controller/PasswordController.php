@@ -38,7 +38,7 @@ class PasswordController extends AppController
      * {@inheritDoc}
      * {@codeCoverageIgnore}
      */
-    public function beforeFilter(Event $event): ?Response
+    public function beforeFilter(\Cake\Event\EventInterface $event): ?Response
     {
         // if authenticated, redirect to dashboard
         $tokens = $this->Auth->user('tokens');

@@ -62,7 +62,7 @@ class ModulesController extends AppController
      * {@inheritDoc}
      * @codeCoverageIgnore
      */
-    public function beforeRender(Event $event): ?Response
+    public function beforeRender(\Cake\Event\EventInterface $event): ?Response
     {
         $this->set('objectType', $this->objectType);
 

@@ -1,0 +1,83 @@
+/*
+
+██████╗ ███████╗██████╗ ██╗████████╗ █████╗     ██╗  ██╗
+██╔══██╗██╔════╝██╔══██╗██║╚══██╔══╝██╔══██╗    ██║  ██║
+██████╔╝█████╗  ██║  ██║██║   ██║   ███████║    ███████║
+██╔══██╗██╔══╝  ██║  ██║██║   ██║   ██╔══██║    ╚════██║
+██████╔╝███████╗██████╔╝██║   ██║   ██║  ██║         ██║
+╚═════╝ ╚══════╝╚═════╝ ╚═╝   ╚═╝   ╚═╝  ╚═╝         ╚═╝
+
+BEdita 4 ~ @ 2018 from ChannelWeb & Chialab with love
+*/
+@import './_variables';   // common variables used for color, margins, typography, media breakpoints, tag collections
+@import './_mixins';
+
+// general
+@import './_base_normalize';
+@import './_base';
+@import './_layout';      // main grid base layout
+@import './_buttons';
+@import './_forms';
+@import './_forms_file';
+@import './_utility_classes';
+@import './_elements';
+@import './_columns';
+@import './_richtexteditor';
+
+// elements
+@import '../../templates/element/Form/form';
+@import '../../templates/element/Form/calendar';
+@import '../../templates/element/Form/locations';
+@import '../../templates/element/Form/trees';
+@import '../../templates/element/Form/publish_properties';
+@import '../../templates/element/Form/relations';
+@import '../../templates/element/Form/map';
+@import '../../templates/element/Form/history';
+@import '../../templates/element/Flash/flash';
+@import '../../templates/element/Menu/colophon';
+@import '../../templates/element/Menu/menu';
+@import '../../templates/element/Menu/sidebar';
+@import '../../templates/element/Modules/index_properties';
+@import '../../templates/element/FilterBox/filter_box';
+@import '../../templates/element/Panel/panel';
+@import '../../templates/element/filter_type';
+
+// components
+@import '../js/app/components/dialog/dialog.scss';
+
+// Pages
+@import '../../templates/Pages/Error/error';
+@import '../../templates/Pages/Login/login';
+@import '../../templates/Pages/Dashboard/dashboard';
+@import '../../templates/Pages/Import/import';
+@import '../../templates/Pages/Modules/modules-index';
+@import '../../templates/Pages/Modules/modules-view';
+@import '../../templates/Pages/Model/model-index';
+@import '../../templates/Pages/Model/model-view';
+
+@import './_non-production';
+
+// vue
+[v-cloak] {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    > * {
+        display: none !important;
+    }
+
+    &:before {
+        animation: spinAround .75s infinite linear;
+        border: 2px solid #dbdbdb;
+        border-radius: 290486px;
+        border-right-color: transparent;
+        border-top-color: transparent;
+        content: "";
+        display: block;
+        height: $gutter * 2;
+        width: $gutter * 2;
+    }
+}
