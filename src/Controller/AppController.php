@@ -54,7 +54,7 @@ class AppController extends Controller
 
         $this->loadComponent('Auth', [
             'authenticate' => [
-                'BEdita/WebTools.Api' => [],
+                'Api' => [],
             ],
             'loginAction' => ['_name' => 'login'],
             'loginRedirect' => ['_name' => 'dashboard'],
@@ -145,7 +145,8 @@ class AppController extends Controller
             $this->set(compact('user'));
         }
 
-        $this->viewBuilder()->setTemplatePath('Pages/' . $this->_viewPath());
+        $path = $this->viewBuilder()->getTemplatePath();
+        $this->viewBuilder()->setTemplatePath('Pages/' . $path);
 
         return null;
     }
