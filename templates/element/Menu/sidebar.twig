@@ -17,7 +17,7 @@
             <div class="module-buttons">
                 {{ _view.fetch('module-buttons')|raw }}
                 {% if currentModule.hints.multiple_types and types.right is iterable %}
-                    {% element 'filter_type' %}
+                    {{ element 'filter_type' }}
                 {% endif %}
             </div>
 
@@ -61,6 +61,6 @@
 
 
     <div class="sidebar-footer">
-        {% element 'Menu/colophon' %}
+        {{ element 'Menu/colophon' }}
     </div>
 </div>

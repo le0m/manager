@@ -24,13 +24,13 @@
                         <span class="has-text-size-smallest" v-show="!isLoading"><: totalObjects :></span>
                 </header>
                 <div v-show="isOpen" class="tab-container">
-                    {% element 'Form/relation' {
+                    {{ element 'Form/relation' {
                         'relationName': relationName,
                         'relationSchema': relationsSchema[relationName],
                         'dataList': dataList,
                         'preCount': preCount,
                         'uploadableNum': uploadableNum,
-                    } %}
+                    } }}
                 </div>
 
             </section>
