@@ -13,7 +13,6 @@
 namespace App\Controller;
 
 use BEdita\WebTools\Controller\ApiProxyTrait;
-use Cake\Event\Event;
 use Cake\Http\Response;
 
 /**

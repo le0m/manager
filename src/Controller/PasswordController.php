@@ -12,12 +12,9 @@
  */
 namespace App\Controller;
 
-use App\Application;
 use BEdita\SDK\BEditaClientException;
-use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\Routing\Router;
-use Cake\Utility\Hash;
 
 /**
  * Perform password reset and change.

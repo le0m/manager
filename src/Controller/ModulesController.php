@@ -14,7 +14,6 @@ namespace App\Controller;
 
 use App\Core\Exception\UploadException;
 use BEdita\SDK\BEditaClientException;
-use Cake\Event\Event;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Http\Response;
 use Cake\Utility\Hash;
