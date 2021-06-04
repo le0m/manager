@@ -316,7 +316,7 @@ class TranslationsControllerTest extends TestCase
     {
         $o = $this->getTestObject();
         if ($o == null) {
-            $response = $this->client->restoreObject($id, $type);
+            $this->client->restoreObject($id, $type);
         }
     }
 
@@ -329,7 +329,8 @@ class TranslationsControllerTest extends TestCase
     private function assertExpectedViewVars($expected)
     {
         foreach ($expected as $varName) {
-            static::assertArrayHasKey($varName, $this->controller->viewVars);
+            $actual = $this->controller->viewBuilder()->getVar($varName);
+            static::assertNotEmpty($actual);
         }
     }
 }

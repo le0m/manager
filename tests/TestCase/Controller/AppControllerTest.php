@@ -214,7 +214,7 @@ class AppControllerTest extends TestCase
     }
 
     /**
-     * Test `beforeRender` method for correct user object in Controller viewVars
+     * Test `beforeRender`
      *
      * @covers ::beforeRender()
      *
@@ -222,14 +222,14 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeRender(): void
     {
-        $user = $this->setupControllerAndLogin();
+        $this->setupControllerAndLogin();
+        $this->AppController->dispatchEvent('Controller.beforeRender');
+        $actual = (array)$this->AppController->viewBuilder()->getVar('user');
 
-        $event = $this->AppController->dispatchEvent('Controller.beforeRender');
-
-        static::assertArrayHasKey('user', $this->AppController->viewVars);
-        static::assertArrayHasKey('tokens', $this->AppController->viewVars['user']);
-        static::assertArrayHasKey('jwt', $this->AppController->viewVars['user']['tokens']);
-        static::assertArrayHasKey('renew', $this->AppController->viewVars['user']['tokens']);
+        static::assertNotEmpty($actual);
+        static::assertArrayHasKey('tokens', $actual);
+        static::assertArrayHasKey('jwt', $actual['tokens']);
+        static::assertArrayHasKey('renew', $actual['tokens']);
     }
 
     /**
@@ -241,7 +241,7 @@ class AppControllerTest extends TestCase
      */
     public function testBeforeRenderUpdateTokens(): void
     {
-        $user = $this->setupControllerAndLogin();
+        $this->setupControllerAndLogin();
 
         // fake updated token
         $updatedToken = [
@@ -258,12 +258,12 @@ class AppControllerTest extends TestCase
             ->willReturn($updatedToken);
 
         $this->AppController->apiClient = $apiClient;
-
-        $event = $this->AppController->dispatchEvent('Controller.beforeRender');
+        $this->AppController->dispatchEvent('Controller.beforeRender');
 
         // assert user objects has been updated
-        static::assertArrayHasKey('user', $this->AppController->viewVars);
-        static::assertEquals($updatedToken, $this->AppController->viewVars['user']['tokens']);
+        $actual = (array)$this->AppController->viewBuilder()->getVar('user');
+        static::assertNotEmpty($actual);
+        static::assertEquals($updatedToken, $actual['tokens']);
     }
 
     /**

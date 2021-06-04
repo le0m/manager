@@ -609,8 +609,8 @@ class ModulesControllerTest extends TestCase
 
         // do controller call
         $this->controller->relatedJson('new', 'has_media');
-
-        static::assertEquals([], $this->controller->viewVars['data']);
+        $actual = (array)$this->controller->viewBuilder()->getVar('data');
+        static::assertEquals([], $actual);
     }
 
     /**
@@ -1023,7 +1023,7 @@ class ModulesControllerTest extends TestCase
     {
         $o = $this->getTestObject();
         if ($o == null) {
-            $response = $this->client->restoreObject($id, $type);
+            $this->client->restoreObject($id, $type);
         }
     }
 
@@ -1036,7 +1036,8 @@ class ModulesControllerTest extends TestCase
     private function assertExpectedViewVars($expected)
     {
         foreach ($expected as $varName) {
-            static::assertArrayHasKey($varName, $this->controller->viewVars);
+            $actual = $this->AppController->viewBuilder()->getVar($varName);
+            static::assertNotEmpty($actual);
         }
     }
 }

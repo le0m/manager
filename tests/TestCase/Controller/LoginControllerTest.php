@@ -183,15 +183,15 @@ class LoginControllerTest extends TestCase
 
         $response = $this->Login->login();
         static::assertNull($response);
-        $viewVars = $this->Login->viewVars;
-        static::assertArrayHasKey('projects', $viewVars);
+        $actual = (array)$this->Login->viewBuilder()->getVar('projects');
+        static::assertNotEmpty($actual);
         $expected = [
             [
                 'value' => 'test',
                 'text' => 'Test',
             ],
         ];
-        static::assertEquals($expected, $viewVars['projects']);
+        static::assertEquals($expected, $actual);
     }
 
     /**

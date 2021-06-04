@@ -169,18 +169,18 @@ class LayoutHelperTest extends TestCase
      *
      * @param string $expected The expected link
      * @param string $name The view name
-     * @param array $viewVars The view vars
+     * @param array $viewVariables The view vars
      *
      * @dataProvider moduleLinkProvider()
      * @covers ::moduleLink()
      * @covers ::commandLinkClass()
      */
-    public function testModuleLink($expected, $name, array $viewVars = []): void
+    public function testModuleLink($expected, $name, array $viewVariables = []): void
     {
         $request = $response = $events = null;
         $data = ['name' => $name];
         $view = new View($request, $response, $events, $data);
-        foreach ($viewVars as $key => $value) {
+        foreach ($viewVariables as $key => $value) {
             $view->set($key, $value);
         }
         $layout = new LayoutHelper($view);

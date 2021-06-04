@@ -567,16 +567,17 @@ class ModulesComponentTest extends TestCase
         $controller = $this->Modules->getController();
         $controller->dispatchEvent('Controller.startup');
 
-        $viewVars = $controller->viewVars;
-        static::assertArrayHasKey('project', $viewVars);
-        static::assertEquals($project, $viewVars['project']);
-        static::assertArrayHasKey('modules', $viewVars);
-        static::assertSame($modules, Hash::extract($viewVars['modules'], '{*}.name'));
+        $actual = (array)$controller->viewBuilder()->getVar('project');
+        static::assertEquals($project, $actual);
+
+        $actual = (array)$controller->viewBuilder()->getVar('modules');
+        static::assertSame($modules, Hash::extract($actual, '{*}.name'));
         if ($currentModule !== null) {
-            static::assertArrayHasKey('currentModule', $viewVars);
-            static::assertSame($currentModule, Hash::get($viewVars['currentModule'], 'name'));
+            $actual = (array)$controller->viewBuilder()->getVar('currentModule');
+            static::assertSame($currentModule, Hash::get($actual, 'name'));
         } else {
-            static::assertArrayNotHasKey('currentModule', $viewVars);
+            $actual = (array)$controller->viewBuilder()->getVar('currentModule');
+            static::assertEmpty($actual);
         }
     }
 
@@ -1118,13 +1119,9 @@ class ModulesComponentTest extends TestCase
     public function testSetupRelationsMeta(array $expected, array $schema, array $relationships, array $order = [])
     {
         $this->Modules->setupRelationsMeta($schema, $relationships, $order);
-
-        $viewVars = $this->Modules->getController()->viewVars;
-
-        static::assertEquals(array_keys($expected), array_keys($viewVars));
-
         foreach ($expected as $key => $value) {
-            static::assertEquals($value, $viewVars[$key]);
+            $actual = $this->Modules->viewBuilder()->getVar($key);
+            static::assertEquals($value, $actual);
         }
     }
 

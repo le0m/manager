@@ -165,9 +165,10 @@ class ModelBaseControllerTest extends TestCase
     {
         $this->setupController();
         $this->ModelController->dispatchEvent('Controller.beforeRender');
-
-        static::assertNotEmpty($this->ModelController->viewVars['resourceType']);
-        static::assertNotEmpty($this->ModelController->viewVars['moduleLink']);
+        $actual = $this->ModelController->viewBuilder()->getVar('resourceType');
+        static::assertNotEmpty($actual);
+        $actual = $this->ModelController->viewBuilder()->getVar('moduleLink');
+        static::assertNotEmpty($actual);
     }
 
     /**
@@ -185,7 +186,8 @@ class ModelBaseControllerTest extends TestCase
         $this->ModelController->index();
         $vars = ['resources', 'meta', 'links', 'properties'];
         foreach ($vars as $var) {
-            static::assertNotEmpty($this->ModelController->viewVars[$var]);
+            $actual = $this->ModelController->viewBuilder()->getVar($var);
+            static::assertNotEmpty($actual);
         }
     }
 
@@ -217,7 +219,8 @@ class ModelBaseControllerTest extends TestCase
         $this->ModelController->view(1);
         $vars = ['resource', 'schema', 'properties'];
         foreach ($vars as $var) {
-            static::assertNotEmpty($this->ModelController->viewVars[$var]);
+            $actual = $this->ModelController->viewBuilder()->getVar($var);
+            static::assertNotEmpty($actual);
         }
     }
 

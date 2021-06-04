@@ -136,7 +136,8 @@ class ModulesController extends AppController
         }
 
         // set sort order: use `currentModule.sort` or default '-id'
-        $query['sort'] = (string)Hash::get($this->viewVars, 'currentModule.sort', '-id');
+        $currentModule = (array)$this->viewBuilder()->getVar('currentModule');
+        $query['sort'] = (string)Hash::get($currentModule, 'sort', '-id');
 
         return $query;
     }
