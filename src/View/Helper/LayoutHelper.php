@@ -32,6 +32,44 @@ class LayoutHelper extends Helper
     public $helpers = ['Html'];
 
     /**
+     * Bedita config from page.
+     *
+     * @return array
+     */
+    public function beditaConfig(): array
+    {
+        $csrfToken = null;
+        if (!empty($this->getView()->getRequest()->getParam('_csrfToken'))) {
+            $csrfToken = json_encode($this->getView()->getRequest()->getParam('_csrfToken'));
+        } elseif (!empty($this->getView()->getRequest()->getData('_csrfToken'))) {
+            $csrfToken = json_encode($this->getView()->getRequest()->getData('_csrfToken'));
+        }
+        $modules = $this->getView()->getVars('modules');
+        if (!isset($modules)) {
+            $modules = [];
+        }
+        $uploadable = $this->getView()->getVars('uploadable');
+        if (!isset($uploadable)) {
+            $uploadable = [];
+        }
+        $currentModule = $this->getView()->getVars('currentModule');
+        if (!isset($currentModule)) {
+            $currentModule = ['name' => 'home'];
+        }
+
+        return [
+            'base' => \Cake\Routing\Router::fullBaseUrl(),
+            'currentModule' => $currentModule,
+            'template' => $this->template,
+            'modules' => array_keys($modules),
+            'plugins' => \App\Plugin::loadedAppPlugins(),
+            'uploadable' => $uploadable,
+            'locale' => \Cake\I18n\I18n::getLocale(),
+            'csrfToken' => $csrfToken,
+        ];
+    }
+
+    /**
      * Is Dashboard
      *
      * @return bool True if visible for view
