@@ -39,20 +39,22 @@ class LayoutHelper extends Helper
     public function beditaConfig(): string
     {
         $csrfToken = null;
-        if (!empty($this->getView()->getRequest()->getParam('_csrfToken'))) {
-            $csrfToken = json_encode($this->getView()->getRequest()->getParam('_csrfToken'));
+        if (!empty($this->getView()->getRequest()->getAttribute('csrfToken'))) {
+            $csrfToken = $this->getView()->getRequest()->getAttribute('csrfToken');
+        } elseif (!empty($this->getView()->getRequest()->getParam('_csrfToken'))) {
+            $csrfToken = $this->getView()->getRequest()->getParam('_csrfToken');
         } elseif (!empty($this->getView()->getRequest()->getData('_csrfToken'))) {
-            $csrfToken = json_encode($this->getView()->getRequest()->getData('_csrfToken'));
+            $csrfToken = $this->getView()->getRequest()->getData('_csrfToken');
         }
-        $modules = $this->getView()->getVars('modules');
+        $modules = $this->getView()->get('modules');
         if (!isset($modules)) {
             $modules = [];
         }
-        $uploadable = $this->getView()->getVars('uploadable');
+        $uploadable = $this->getView()->get('uploadable');
         if (!isset($uploadable)) {
             $uploadable = [];
         }
-        $currentModule = $this->getView()->getVars('currentModule');
+        $currentModule = $this->getView()->get('currentModule');
         if (!isset($currentModule)) {
             $currentModule = ['name' => 'home'];
         }
@@ -60,7 +62,7 @@ class LayoutHelper extends Helper
         return json_encode([
             'base' => \Cake\Routing\Router::fullBaseUrl(),
             'currentModule' => $currentModule,
-            'template' => $this->template,
+            'template' => $this->getView()->getTemplate(),
             'modules' => array_keys($modules),
             'plugins' => \App\Plugin::loadedAppPlugins(),
             'uploadable' => $uploadable,
