@@ -331,7 +331,7 @@ class ModulesController extends AppController
             $this->log($error->getMessage(), LogLevel::ERROR);
 
             $this->set(compact('error'));
-            $this->set('_serialize', ['error']);
+            $this->viewBuilder()->setOption('serialize', ['error']);
 
             return;
         }
@@ -342,7 +342,7 @@ class ModulesController extends AppController
         $this->getThumbsUrls($response);
 
         $this->set((array)$response);
-        $this->set('_serialize', array_keys($response));
+        $this->viewBuilder()->setOption('serialize', array_keys($response));
     }
 
     /**
@@ -432,7 +432,7 @@ class ModulesController extends AppController
     {
         if ($id === 'new') {
             $this->set('data', []);
-            $this->set('_serialize', ['data']);
+            $this->viewBuilder()->setOption('serialize', ['data']);
 
             return;
         }
@@ -446,7 +446,7 @@ class ModulesController extends AppController
             $this->log($error->getMessage(), LogLevel::ERROR);
 
             $this->set(compact('error'));
-            $this->set('_serialize', ['error']);
+            $this->viewBuilder()->setOption('serialize', ['error']);
 
             return;
         }
@@ -454,7 +454,7 @@ class ModulesController extends AppController
         $this->getThumbsUrls($response);
 
         $this->set((array)$response);
-        $this->set('_serialize', array_keys($response));
+        $this->viewBuilder()->setOption('serialize', array_keys($response));
     }
 
     /**
@@ -475,13 +475,13 @@ class ModulesController extends AppController
             $this->log($error, LogLevel::ERROR);
 
             $this->set(compact('error'));
-            $this->set('_serialize', ['error']);
+            $this->viewBuilder()->setOption('serialize', ['error']);
 
             return;
         }
 
         $this->set((array)$response);
-        $this->set('_serialize', array_keys($response));
+        $this->viewBuilder()->setOption('serialize', array_keys($response));
     }
 
     /**
@@ -514,7 +514,7 @@ class ModulesController extends AppController
         }
 
         $this->set((array)$response);
-        $this->set('_serialize', array_keys($response));
+        $this->viewBuilder()->setOption('serialize', array_keys($response));
     }
 
     /**

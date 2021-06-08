@@ -67,7 +67,7 @@ class ImportController extends AppController
         $this->request->allowMethod('get');
         $this->loadFilters();
         $this->loadAsyncJobs();
-        $this->set('_serialize', ['jobs']);
+        $this->viewBuilder()->setOption('serialize', ['jobs']);
     }
 
     /**

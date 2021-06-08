@@ -83,7 +83,7 @@ class PropertyTypesController extends ModelBaseController
         }
 
         $this->set((array)$response);
-        $this->set('_serialize', true);
+        $this->viewBuilder()->setOption('serialize', true);
     }
 
     /**
