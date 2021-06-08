@@ -40,7 +40,7 @@ class SchemaComponent extends Component
      *
      * @var string
      */
-    const CACHE_CONFIG = '_schema_types_';
+    public const CACHE_CONFIG = '_schema_types_';
 
     /**
      * {@inheritDoc}

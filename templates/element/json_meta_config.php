@@ -29,6 +29,6 @@
 
 <script type="text/javascript">
 
-    const BEDITA = <?= json_encode($conf) ?>;
+    public const BEDITA = <?= json_encode($conf) ?>;
 
 </script>
