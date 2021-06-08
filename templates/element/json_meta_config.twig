@@ -1,5 +1,5 @@
 <script type="text/javascript">
 
-    const BEDITA = {{ Layout.beditaConfig()|json_encode }};
+    const BEDITA = JSON.parse('{{ Layout.beditaConfig()|raw }}');
 
 </script>

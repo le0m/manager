@@ -32,11 +32,11 @@ class LayoutHelper extends Helper
     public $helpers = ['Html'];
 
     /**
-     * Bedita config from page.
+     * Bedita JSON config.
      *
-     * @return array
+     * @return string
      */
-    public function beditaConfig(): array
+    public function beditaConfig(): string
     {
         $csrfToken = null;
         if (!empty($this->getView()->getRequest()->getParam('_csrfToken'))) {
@@ -57,7 +57,7 @@ class LayoutHelper extends Helper
             $currentModule = ['name' => 'home'];
         }
 
-        return [
+        return json_encode([
             'base' => \Cake\Routing\Router::fullBaseUrl(),
             'currentModule' => $currentModule,
             'template' => $this->template,
@@ -66,7 +66,7 @@ class LayoutHelper extends Helper
             'uploadable' => $uploadable,
             'locale' => \Cake\I18n\I18n::getLocale(),
             'csrfToken' => $csrfToken,
-        ];
+        ]);
     }
 
     /**
