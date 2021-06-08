@@ -86,7 +86,7 @@ class ModulesController extends AppController
         try {
             $response = $this->apiClient->getObjects($this->objectType, $this->indexQuery());
         } catch (BEditaClientException $e) {
-            $this->log($e, LogLevel::ERROR);
+            $this->log($e->getMessage(), LogLevel::ERROR);
             $this->Flash->error($e->getMessage(), ['params' => $e]);
             // remove session filter to avoid error repetition
             $session = $this->request->getSession();
@@ -157,7 +157,7 @@ class ModulesController extends AppController
             $response = $this->apiClient->getObject($id, $this->objectType, $query);
         } catch (BEditaClientException $e) {
             // Error! Back to index.
-            $this->log($e, LogLevel::ERROR);
+            $this->log($e->getMessage(), LogLevel::ERROR);
             $this->Flash->error(__('Error retrieving the requested content'), ['params' => $e]);
 
             return $this->redirect(['_name' => 'modules:list', 'object_type' => $this->objectType]);
@@ -287,7 +287,7 @@ class ModulesController extends AppController
             $this->Modules->saveRelated($objectId, $this->objectType, $relatedData);
         } catch (InternalErrorException | BEditaClientException | UploadException $e) {
             // Error! Back to object view or index.
-            $this->log($e, LogLevel::ERROR);
+            $this->log($e->getMessage(), LogLevel::ERROR);
             $this->Flash->error($e->getMessage(), ['params' => $e]);
 
             // set session data to recover form
@@ -328,7 +328,7 @@ class ModulesController extends AppController
             // save data
             $response = $this->apiClient->save($this->objectType, $requestData);
         } catch (BEditaClientException $error) {
-            $this->log($error, LogLevel::ERROR);
+            $this->log($error->getMessage(), LogLevel::ERROR);
 
             $this->set(compact('error'));
             $this->set('_serialize', ['error']);
@@ -368,7 +368,7 @@ class ModulesController extends AppController
             unset($attributes['relationships']);
             $attributes['title'] = $this->request->getQuery('title');
         } catch (BEditaClientException $e) {
-            $this->log($e, LogLevel::ERROR);
+            $this->log($e->getMessage(), LogLevel::ERROR);
             $this->Flash->error($e->getMessage(), ['params' => $e]);
 
             return $this->redirect(['_name' => 'modules:view', 'object_type' => $this->objectType, 'id' => $id]);
@@ -404,7 +404,7 @@ class ModulesController extends AppController
             try {
                 $this->apiClient->deleteObject($id, $this->objectType);
             } catch (BEditaClientException $e) {
-                $this->log($e, LogLevel::ERROR);
+                $this->log($e->getMessage(), LogLevel::ERROR);
                 $this->Flash->error($e->getMessage(), ['params' => $e]);
                 if (!empty($this->request->getData('id'))) {
                     return $this->redirect(['_name' => 'modules:view', 'object_type' => $this->objectType, 'id' => $this->request->getData('id')]);
@@ -443,7 +443,7 @@ class ModulesController extends AppController
             $response = $this->apiClient->getRelated($id, $this->objectType, $relation, $query);
             $response = $this->ApiFormatter->embedIncluded((array)$response);
         } catch (BEditaClientException $error) {
-            $this->log($error, LogLevel::ERROR);
+            $this->log($error->getMessage(), LogLevel::ERROR);
 
             $this->set(compact('error'));
             $this->set('_serialize', ['error']);
@@ -503,7 +503,7 @@ class ModulesController extends AppController
 
             $this->getThumbsUrls($response);
         } catch (BEditaClientException $ex) {
-            $this->log($ex, LogLevel::ERROR);
+            $this->log($ex->getMessage(), LogLevel::ERROR);
 
             $this->set([
                 'error' => $ex->getMessage(),
@@ -622,7 +622,7 @@ class ModulesController extends AppController
 
             // if errors occured on any single save show error message
             if (!empty($errors)) {
-                $this->log($errors, LogLevel::ERROR);
+                $this->log($errors->getMessage(), LogLevel::ERROR);
                 $this->Flash->error(__('Bulk Action failed on: '), ['params' => $errors]);
             }
         }
